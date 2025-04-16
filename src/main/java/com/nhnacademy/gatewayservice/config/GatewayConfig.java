@@ -12,12 +12,11 @@ public class GatewayConfig {
     public RouteLocator gatewayRoutes(RouteLocatorBuilder builder){
         return builder.routes()
                 .route("auth-service", r -> r
-                        .path("/auth/**")
+                        .path("/api/v1/auth/**") // path를 확인하고 uri로 이동
                         .uri("lb://auth-service"))
-                .route("user-service", r -> r
-                        .path("/user/**")
-                        .uri("lb://user-service")
+                .route("member-service", r -> r
+                        .path("/api/v1/members/**")
+                        .uri("lb://member-service")
                 ).build();
-
     }
 }
