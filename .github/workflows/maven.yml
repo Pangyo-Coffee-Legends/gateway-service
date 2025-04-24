@@ -22,6 +22,8 @@ jobs:
 
       - name: Build with Maven
         run: mvn -B package --file pom.xml
+        env:
+          JWT_KEY: ${{ secrets.JWT_KEY }}
 
       - name: upload gateway jar to server
         uses: appleboy/scp-action@v0.1.7
