@@ -11,9 +11,9 @@ public class GatewayConfig {
     @Bean
     public RouteLocator gatewayRoutes(RouteLocatorBuilder builder){
         return builder.routes()
-                .route("auth-service", r -> r
-                        .path("/api/v1/auth/**") // path를 확인하고 uri로 이동
-                        .uri("lb://auth-service"))
+                .route("token-service", r -> r
+                        .path("/api/v1/token/**") // path를 확인하고 uri로 이동
+                        .uri("lb://token-service"))
                 .route("member-service", r -> r
                         .path("/api/v1/members/**")
                         .uri("lb://member-service")
