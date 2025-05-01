@@ -17,19 +17,27 @@ public class GatewayConfig {
     public RouteLocator gatewayRoutes(RouteLocatorBuilder builder, JwtAuthenticationFilter jwtAuthenticationFilter){
         return builder.routes()
                 .route("token-service", r -> r
-                        .path("/api/v1/token/**") // path를 확인하고 uri로 이동
+                        .path("/api/v1/token/**")
                         .uri("lb://token-service"))
                 .route("member-service", r -> r
                         .path("/api/v1/members/**")
-                        .uri("lb://member-service")
-                ).route("booking-service", r -> r
+                        .uri("lb://member-service"))
+                .route("work-entry-service", r -> r
+                        .path("/api/v1/attendances/**")
+                        .filters(f -> f.filter(jwtAuthenticationFilter.apply(
+                                new JwtAuthenticationFilter.Config(){{
+                                    setSecretKey(key);
+                                }}
+                        )))// work-entry-service 경로 허용
+                        .uri("lb://work-entry-service"))
+                .route("booking-service", r -> r
                         .path("/api/v1/books/**")
                         .filters(f -> f.filter(jwtAuthenticationFilter.apply(
                                 new JwtAuthenticationFilter.Config(){{
                                     setSecretKey(key);
                                 }}
                         )))
-                        .uri("lb://booking-service")
-                ).build();
+                        .uri("lb://booking-service"))
+                .build();
     }
 }
