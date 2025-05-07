@@ -38,6 +38,30 @@ public class GatewayConfig {
                                 }}
                         )))
                         .uri("lb://booking-service"))
+                .route("rule-service-rules", r -> r
+                        .path("/api/v1/rules/**")
+                        .filters(f -> f.filter(jwtAuthenticationFilter.apply(
+                                new JwtAuthenticationFilter.Config() {{
+                                    setSecretKey(key);
+                                }}
+                        )))
+                        .uri("lb://rule-engine-service"))
+                .route("rule-service-rule-groups", r -> r
+                        .path("/api/v1/rule-groups/**")
+                        .filters(f -> f.filter(jwtAuthenticationFilter.apply(
+                                new JwtAuthenticationFilter.Config() {{
+                                    setSecretKey(key);
+                                }}
+                        )))
+                        .uri("lb://rule-engine-service"))
+                .route("rule-service-engine", r -> r
+                        .path("/api/v1/rule-engine/**")
+                        .filters(f -> f.filter(jwtAuthenticationFilter.apply(
+                                new JwtAuthenticationFilter.Config() {{
+                                    setSecretKey(key);
+                                }}
+                        )))
+                        .uri("lb://rule-engine-service"))
                 .build();
     }
 }
