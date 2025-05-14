@@ -34,6 +34,16 @@ jobs:
           target: "~/gateway/"
           rm: false
 
+      - name: Create application.properties file
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_IP }}
+          username: ${{ secrets.SSH_ID }}
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            echo "${{ secrets.APPLICATION_PROPERTIES }}" > ~/gateway/application.properties
+
       - name: execute gateway startup script
         uses: appleboy/ssh-action@master
         with:

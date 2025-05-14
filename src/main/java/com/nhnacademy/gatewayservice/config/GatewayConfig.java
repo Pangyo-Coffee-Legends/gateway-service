@@ -16,7 +16,13 @@ public class GatewayConfig {
                         .uri("lb://token-service"))
                 .route("member-service", r -> r
                         .path("/api/v1/members/**")
-                        .uri("lb://member-service")
-                ).build();
+                        .uri("lb://member-service"))
+                .route("meeting-room-service", r -> r
+                        .path("/api/v1/meeting-rooms/**")
+                        .uri("lb://meeting-room-service"))
+                .route("booking-service", r -> r
+                        .path("/api/v1/bookings/**")
+                        .uri("lb://booking-service"))
+                .build();
     }
 }
