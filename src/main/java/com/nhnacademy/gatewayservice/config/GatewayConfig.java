@@ -22,6 +22,9 @@ public class GatewayConfig {
                 .route("member-service", r -> r
                         .path("/api/v1/members/**")
                         .uri("lb://member-service"))
+                .route("meeting-room-service", r -> r
+                        .path("/api/v1/meeting-rooms/**")
+                        .uri("lb://meeting-room-service"))
                 .route("work-entry-service", r -> r
                         .path("/api/v1/attendances/**", "/api/v1/entries/**")
                         .filters(f -> f.filter(jwtAuthenticationFilter.apply(
@@ -31,7 +34,7 @@ public class GatewayConfig {
                         )))// work-entry-service 경로 허용
                         .uri("lb://work-entry-service"))
                 .route("booking-service", r -> r
-                        .path("/api/v1/books/**")
+                        .path("/api/v1/bookings/**")
                         .filters(f -> f.filter(jwtAuthenticationFilter.apply(
                                 new JwtAuthenticationFilter.Config(){{
                                     setSecretKey(key);
