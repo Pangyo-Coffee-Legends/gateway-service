@@ -14,7 +14,7 @@ public class GatewayConfig {
     private String key;
 
     @Bean
-    public RouteLocator gatewayRoutes(RouteLocatorBuilder builder, JwtAuthenticationFilter jwtAuthenticationFilter){
+    public RouteLocator gatewayRoutes(RouteLocatorBuilder builder, JwtAuthenticationFilter jwtAuthenticationFilter) {
         return builder.routes()
                 .route("token-service", r -> r
                         .path("/api/v1/token/**")
@@ -25,15 +25,23 @@ public class GatewayConfig {
                 .route("work-entry-service", r -> r
                         .path("/api/v1/attendances/**", "/api/v1/entries/**")
                         .filters(f -> f.filter(jwtAuthenticationFilter.apply(
-                                new JwtAuthenticationFilter.Config(){{
+                                new JwtAuthenticationFilter.Config() {{
                                     setSecretKey(key);
                                 }}
-                        )))// work-entry-service 경로 허용
+                        )))// work-entry-service API요청 허용
                         .uri("lb://work-entry-service"))
+                .route("analysis-service", r -> r
+                        .path("/api/v1/analysis/**")
+                        .filters(f -> f.filter(jwtAuthenticationFilter.apply(
+                                new JwtAuthenticationFilter.Config() {{
+                                    setSecretKey(key);
+                                }}
+                        )))// analysis-service API요청 허용
+                        .uri("lb://analysis-service"))
                 .route("booking-service", r -> r
                         .path("/api/v1/books/**")
                         .filters(f -> f.filter(jwtAuthenticationFilter.apply(
-                                new JwtAuthenticationFilter.Config(){{
+                                new JwtAuthenticationFilter.Config() {{
                                     setSecretKey(key);
                                 }}
                         )))
