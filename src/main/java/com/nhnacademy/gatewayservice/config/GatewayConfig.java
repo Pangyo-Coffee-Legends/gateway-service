@@ -38,6 +38,21 @@ public class GatewayConfig {
                                 }}
                         )))
                         .uri("lb://booking-service"))
+                // ✅ [1] Chat REST API - CORS 허용 필요
+                .route("chat-service-api", r -> r
+                        .path("/api/v1/chat/**")
+                        .filters(f -> f.filter(jwtAuthenticationFilter.apply(
+                                new JwtAuthenticationFilter.Config() {{
+                                    setSecretKey(key);
+                                }}
+                        )))
+                        .uri("lb://chat-service"))
+
+                // ✅ [2] Chat WebSocket - CORS 제거, WebSocket 경로 따로
+                .route("chat-service-ws", r -> r
+                        .path("/ws/chat/connect/**")
+                        .uri("lb:ws://chat-service"))
+
                 .build();
     }
 }
