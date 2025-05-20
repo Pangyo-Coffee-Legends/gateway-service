@@ -14,7 +14,7 @@ public class GatewayConfig {
     private String key;
 
     @Bean
-    public RouteLocator gatewayRoutes(RouteLocatorBuilder builder, JwtAuthenticationFilter jwtAuthenticationFilter){
+    public RouteLocator gatewayRoutes(RouteLocatorBuilder builder, JwtAuthenticationFilter jwtAuthenticationFilter) {
         return builder.routes()
                 .route("token-service", r -> r
                         .path("/api/v1/token/**")
@@ -22,18 +22,29 @@ public class GatewayConfig {
                 .route("member-service", r -> r
                         .path("/api/v1/members/**")
                         .uri("lb://member-service"))
+                .route("meeting-room-service", r -> r
+                        .path("/api/v1/meeting-rooms/**")
+                        .uri("lb://meeting-room-service"))
                 .route("work-entry-service", r -> r
-                        .path("/api/v1/attendances/**")
+                        .path("/api/v1/attendances/**", "/api/v1/entries/**")
                         .filters(f -> f.filter(jwtAuthenticationFilter.apply(
-                                new JwtAuthenticationFilter.Config(){{
+                                new JwtAuthenticationFilter.Config() {{
                                     setSecretKey(key);
                                 }}
-                        )))// work-entry-service 경로 허용
+                        )))// work-entry-service API요청 허용
                         .uri("lb://work-entry-service"))
-                .route("booking-service", r -> r
-                        .path("/api/v1/books/**")
+                .route("analysis-service", r -> r
+                        .path("/api/v1/analysis/**")
                         .filters(f -> f.filter(jwtAuthenticationFilter.apply(
-                                new JwtAuthenticationFilter.Config(){{
+                                new JwtAuthenticationFilter.Config() {{
+                                    setSecretKey(key);
+                                }}
+                        )))// analysis-service API요청 허용
+                        .uri("lb://analysis-service"))
+                .route("booking-service", r -> r
+                        .path("/api/v1/bookings/**")
+                        .filters(f -> f.filter(jwtAuthenticationFilter.apply(
+                                new JwtAuthenticationFilter.Config() {{
                                     setSecretKey(key);
                                 }}
                         )))

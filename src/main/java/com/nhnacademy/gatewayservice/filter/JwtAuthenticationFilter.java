@@ -52,7 +52,7 @@ public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAut
 
             String accessToken = extractTokenFromRequest(request);
             if(accessToken == null){
-                response.setStatusCode(HttpStatus.UNAUTHORIZED);
+                response.setStatusCode(HttpStatus.UNAUTHORIZED); //d여기 걸림 !
                 return response.setComplete();
             }
 
@@ -66,7 +66,7 @@ public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAut
                     })
                     .flatMap(email -> {
                         ServerWebExchange serverWebExchange = exchange.mutate()
-                                .request(r -> r.header("X-USER", email))
+                                .request(r -> r.header("X-USER", email)) //이거 써야함 안스면 401 error
                                 .build();
                         return chain.filter(serverWebExchange);
                     })
