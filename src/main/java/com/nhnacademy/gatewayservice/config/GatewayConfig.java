@@ -64,6 +64,21 @@ public class GatewayConfig {
                         .path("/ws/chat/connect/**")
                         .uri("lb:ws://chat-service"))
 
+                // ✅ [3] Notification REST API - CORS 허용 필요
+                .route("notification-service-api", r -> r
+                        .path("/api/v1/notification/**")
+                        .filters(f -> f.filter(jwtAuthenticationFilter.apply(
+                                new JwtAuthenticationFilter.Config() {{
+                                    setSecretKey(key);
+                                }}
+                        )))
+                        .uri("lb://notify-service"))
+
+                // ✅ [4] Notification WebSocket - CORS 제거, WebSocket 경로 따로
+                .route("notification-service-ws", r -> r
+                        .path("/ws/notification/connect/**")
+                        .uri("lb:ws://notify-service"))
+
                 .build();
     }
 }
