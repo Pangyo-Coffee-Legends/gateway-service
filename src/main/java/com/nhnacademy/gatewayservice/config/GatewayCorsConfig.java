@@ -12,6 +12,9 @@ public class GatewayCorsConfig {
     @Bean
     public CorsWebFilter corsWebFilter() {
         CorsConfiguration config = new CorsConfiguration();
+        config.addAllowedOrigin("https://aiot2.live");
+        config.addAllowedOrigin("https://www.aiot2.live");
+    
         config.addAllowedOrigin("http://localhost:10253");
         config.setAllowCredentials(true);
         config.addAllowedHeader("*");
