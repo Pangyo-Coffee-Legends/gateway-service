@@ -35,5 +35,4 @@ build/
 
 ### properties ###
 *.properties
-app.log
 logs/

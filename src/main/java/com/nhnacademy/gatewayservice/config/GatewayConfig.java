@@ -24,6 +24,11 @@ public class GatewayConfig {
                         .uri("lb://member-service"))
                 .route("meeting-room-service", r -> r
                         .path("/api/v1/meeting-rooms/**")
+                        .filters(f -> f.filter(jwtAuthenticationFilter.apply(
+                                new JwtAuthenticationFilter.Config() {{
+                                    setSecretKey(key);
+                                }}
+                        )))
                         .uri("lb://meeting-room-service"))
                 .route("work-entry-service", r -> r
                         .path("/api/v1/attendances/**", "/api/v1/entries/**")

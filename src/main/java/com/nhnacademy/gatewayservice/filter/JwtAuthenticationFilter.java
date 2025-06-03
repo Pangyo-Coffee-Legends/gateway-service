@@ -102,10 +102,11 @@ public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAut
     }
 
     public String extractTokenFromRequest(ServerHttpRequest request){
-//        String token = request.getHeaders().getFirst("Authentication");
-//        if(token != null && token.startsWith("Bearer ")){
-//            return token.substring(7);
-//        }
+        String token = request.getHeaders().getFirst("Authorization");
+        if(token != null && token.startsWith("Bearer ")){
+            return token.substring(7);
+        }
+
         HttpCookie tokenCookie = request.getCookies().getFirst("accessToken");
         if (tokenCookie != null) {
             return tokenCookie.getValue();
