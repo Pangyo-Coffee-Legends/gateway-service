@@ -54,6 +54,98 @@ public class GatewayConfig {
                                 }}
                         )))
                         .uri("lb://booking-service"))
+                .route("rule-service-rules", r -> r
+                        .path("/api/v1/rules/**")
+                        .filters(f -> f.filter(jwtAuthenticationFilter.apply(
+                                new JwtAuthenticationFilter.Config() {{
+                                    setSecretKey(key);
+                                }}
+                        )))
+                        .uri("lb://rule-engine-service"))
+                .route("rule-service-rule-groups", r -> r
+                        .path("/api/v1/rule-groups/**")
+                        .filters(f -> f.filter(jwtAuthenticationFilter.apply(
+                                new JwtAuthenticationFilter.Config() {{
+                                    setSecretKey(key);
+                                }}
+                        )))
+                        .uri("lb://rule-engine-service"))
+                .route("rule-service-engine", r -> r
+                        .path("/api/v1/rule-engine/**")
+                        .filters(f -> f.filter(jwtAuthenticationFilter.apply(
+                                new JwtAuthenticationFilter.Config() {{
+                                    setSecretKey(key);
+                                }}
+                        )))
+                        .uri("lb://rule-engine-service"))
+
+
+                //Action, Condition 추가
+                .route("rule-service-actions", r -> r
+                        .path("/api/v1/actions/**")
+                        .filters(f -> f.filter(jwtAuthenticationFilter.apply(
+                                new JwtAuthenticationFilter.Config() {{
+                                    setSecretKey(key);
+                                }}
+                        )))
+                        .uri("lb://rule-engine-service"))
+
+                .route("rule-service-conditions", r -> r
+                        .path("/api/v1/conditions/**")
+                        .filters(f -> f.filter(jwtAuthenticationFilter.apply(
+                                new JwtAuthenticationFilter.Config() {{
+                                    setSecretKey(key);
+                                }}
+                        )))
+                        .uri("lb://rule-engine-service"))
+
+                .route("iot-service-sensors", r -> r
+                        .path("/api/v1/sensors/**")
+                        .filters(f -> f.filter(jwtAuthenticationFilter.apply(
+                                new JwtAuthenticationFilter.Config() {{
+                                    setSecretKey(key);
+                                }}
+                        )))
+                        .uri("lb://iot-service"))
+
+                .route("rule-service-comfort", r -> r
+                        .path("/api/v1/comfort/**")
+                        .filters(f -> f.filter(jwtAuthenticationFilter.apply(
+                                new JwtAuthenticationFilter.Config() {{
+                                    setSecretKey(key);
+                                }}
+                        )))
+                        .uri("lb://rule-engine-service"))
+                // ✅ [1] Chat REST API - CORS 허용 필요
+                .route("chat-service-api", r -> r
+                        .path("/api/v1/chat/**")
+                        .filters(f -> f.filter(jwtAuthenticationFilter.apply(
+                                new JwtAuthenticationFilter.Config() {{
+                                    setSecretKey(key);
+                                }}
+                        )))
+                        .uri("lb://chat-service"))
+
+                // ✅ [2] Chat WebSocket - CORS 제거, WebSocket 경로 따로
+                .route("chat-service-ws", r -> r
+                        .path("/ws/chat/connect/**")
+                        .uri("lb:ws://chat-service"))
+
+                // ✅ [3] Notification REST API - CORS 허용 필요
+                .route("notification-service-api", r -> r
+                        .path("/api/v1/notification/**")
+                        .filters(f -> f.filter(jwtAuthenticationFilter.apply(
+                                new JwtAuthenticationFilter.Config() {{
+                                    setSecretKey(key);
+                                }}
+                        )))
+                        .uri("lb://notify-service"))
+
+                // ✅ [4] Notification WebSocket - CORS 제거, WebSocket 경로 따로
+                .route("notification-service-ws", r -> r
+                        .path("/ws/notification/connect/**")
+                        .uri("lb:ws://notify-service"))
+
                 .build();
     }
 }
