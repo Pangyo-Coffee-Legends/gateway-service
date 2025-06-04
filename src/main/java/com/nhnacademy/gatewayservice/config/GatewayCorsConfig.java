@@ -43,6 +43,13 @@ public class GatewayCorsConfig {
         source.registerCorsConfiguration("/api/v1/books/**", createDefaultCorsConfig());
         source.registerCorsConfiguration("/api/v1/chat/**", createDefaultCorsConfig());
         source.registerCorsConfiguration("/api/v1/notification/**", createDefaultCorsConfig());
+        source.registerCorsConfiguration("/api/v1/rules/**", createDefaultCorsConfig());
+        source.registerCorsConfiguration("/api/v1/rule-groups/**", createDefaultCorsConfig());
+        source.registerCorsConfiguration("/api/v1/rule-engine/**", createDefaultCorsConfig());
+        source.registerCorsConfiguration("/api/v1/actions/**", createDefaultCorsConfig());
+        source.registerCorsConfiguration("/api/v1/conditions/**", createDefaultCorsConfig());
+        source.registerCorsConfiguration("/api/v1/sensors/**", createDefaultCorsConfig());
+        source.registerCorsConfiguration("/api/v1/comfort/**", createDefaultCorsConfig());
 
         return new CorsWebFilter(source);
     }
