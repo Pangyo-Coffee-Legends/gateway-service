@@ -40,6 +40,7 @@ public class GatewayCorsConfig {
         source.registerCorsConfiguration("/api/v1/token/**", createDefaultCorsConfig());
         source.registerCorsConfiguration("/api/v1/members/**", createDefaultCorsConfig());
         source.registerCorsConfiguration("/api/v1/attendances/**", createDefaultCorsConfig());
+        source.registerCorsConfiguration("/api/v1/entries/**", createDefaultCorsConfig());
         source.registerCorsConfiguration("/api/v1/books/**", createDefaultCorsConfig());
         source.registerCorsConfiguration("/api/v1/chat/**", createDefaultCorsConfig());
         source.registerCorsConfiguration("/api/v1/notification/**", createDefaultCorsConfig());
