@@ -116,6 +116,11 @@ public class GatewayConfig {
                                 }}
                         )))
                         .uri("lb://rule-engine-service"))
+
+
+            .route("image-service-static", r -> r
+                        .path("/images/**")
+                        .uri("lb://image-service"))
                 // ✅ [1] Chat REST API - CORS 허용 필요
                 .route("chat-service-api", r -> r
                         .path("/api/v1/chat/**")
