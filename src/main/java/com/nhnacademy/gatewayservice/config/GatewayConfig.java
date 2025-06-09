@@ -117,10 +117,21 @@ public class GatewayConfig {
                         )))
                         .uri("lb://rule-engine-service"))
 
-
+                        // ✅ [1] 장소 정보 (places)
+            .route("image-service-places", r -> r
+                .path("/api/v1/places/**")
+                .uri("lb://image-service"))
+            
+            // ✅ [2] 층 정보 (floors)
+            .route("image-service-floors", r -> r
+                .path("/api/v1/floors/**")
+                .uri("lb://image-service"))
+            
+            // ✅ [3] 정적 이미지 (ex: /images/xxx.png)
             .route("image-service-static", r -> r
-                        .path("/images/**")
-                        .uri("lb://image-service"))
+                .path("/images/**")
+                .uri("lb://image-service"))
+
                 // ✅ [1] Chat REST API - CORS 허용 필요
                 .route("chat-service-api", r -> r
                         .path("/api/v1/chat/**")
