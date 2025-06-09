@@ -50,6 +50,7 @@ public class GatewayCorsConfig {
         source.registerCorsConfiguration("/api/v1/conditions/**", createDefaultCorsConfig());
         source.registerCorsConfiguration("/api/v1/sensors/**", createDefaultCorsConfig());
         source.registerCorsConfiguration("/api/v1/floors/**", createDefaultCorsConfig());
+        source.registerCorsConfiguration("/api/v1/places/**", createDefaultCorsConfig());
         source.registerCorsConfiguration("/api/v1/comfort/**", createDefaultCorsConfig());
         source.registerCorsConfiguration("/images/**", createDefaultCorsConfig());
 
