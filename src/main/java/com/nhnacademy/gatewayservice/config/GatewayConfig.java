@@ -158,6 +158,10 @@ public class GatewayConfig {
                         .path("/ws/notification/connect/**")
                         .uri("lb:ws://notify-service"))
 
+                .route("iot-service-ws-sensor", r -> r
+                        .path("/ws/sensor/**")
+                        .uri("lb:ws://iot-service"))
+
                 .build();
     }
 }
