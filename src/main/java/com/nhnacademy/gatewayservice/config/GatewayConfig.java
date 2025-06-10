@@ -117,7 +117,7 @@ public class GatewayConfig {
                         .uri("lb://image-service"))
 
                 .route("iot-service-images", r -> r
-                        .path("/images/**")
+                        .path("/images/place/**")
                         .uri("lb://image-service"))
 
                 .route("rule-service-comfort", r -> r

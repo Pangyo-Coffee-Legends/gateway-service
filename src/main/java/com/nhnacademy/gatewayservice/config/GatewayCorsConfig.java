@@ -54,7 +54,7 @@ public class GatewayCorsConfig {
         source.registerCorsConfiguration("/api/v1/floors/**", createDefaultCorsConfig());
         source.registerCorsConfiguration("/api/v1/places/**", createDefaultCorsConfig());
         source.registerCorsConfiguration("/api/v1/comfort/**", createDefaultCorsConfig());
-        source.registerCorsConfiguration("/images/**", createDefaultCorsConfig());
+        source.registerCorsConfiguration("/images/place/**", createDefaultCorsConfig());
 
         return new CorsWebFilter(source);
     }
